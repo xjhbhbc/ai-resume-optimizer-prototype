@@ -17,6 +17,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -25,6 +29,7 @@ body {
   background:
     radial-gradient(circle at top left, rgba(31, 138, 112, .14), transparent 34rem),
     linear-gradient(135deg, #f4f6f3, #eef2f5 48%, #f7f3ed);
+  overflow-x: hidden;
 }
 
 button,
@@ -41,9 +46,11 @@ button {
 
 .shell {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
   gap: 18px;
+  width: min(100%, 1520px);
   min-height: 100vh;
+  margin: 0 auto;
   padding: 18px;
 }
 
@@ -56,6 +63,12 @@ button {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  align-self: start;
+  position: sticky;
+  top: 18px;
+  max-height: calc(100vh - 36px);
+  overflow: auto;
+  padding-right: 2px;
 }
 
 .brand {
@@ -68,6 +81,7 @@ button {
 .mark {
   display: grid;
   place-items: center;
+  flex: 0 0 48px;
   width: 48px;
   height: 48px;
   border-radius: 8px;
@@ -234,7 +248,7 @@ input:focus {
 
 h2 {
   max-width: 720px;
-  font-size: clamp(26px, 3.4vw, 46px);
+  font-size: 40px;
   line-height: 1.08;
 }
 
@@ -247,6 +261,7 @@ h2 {
 .icon-btn {
   min-height: 40px;
   border-radius: 8px;
+  white-space: nowrap;
 }
 
 .primary {
@@ -278,7 +293,7 @@ h2 {
 
 .input-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
   gap: 14px;
 }
 
@@ -296,6 +311,7 @@ h2 {
 textarea {
   display: block;
   min-height: 220px;
+  max-height: 48vh;
   padding: 14px;
   border: 0;
   border-radius: 0;
@@ -305,7 +321,7 @@ textarea {
 
 .result-layout {
   display: grid;
-  grid-template-columns: 330px minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 330px) minmax(0, 1fr);
   gap: 14px;
   align-items: start;
 }
@@ -314,6 +330,7 @@ textarea {
   display: grid;
   gap: 16px;
   padding: 18px;
+  min-width: 0;
 }
 
 .score-ring {
@@ -347,6 +364,7 @@ textarea {
 
 .tabs {
   overflow: hidden;
+  min-width: 0;
 }
 
 .tab-list {
@@ -390,7 +408,7 @@ textarea {
 
 .insight {
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(86px, 110px) minmax(0, 1fr) auto;
   gap: 12px;
   align-items: center;
   padding: 12px;
@@ -430,7 +448,8 @@ textarea {
 }
 
 .rewrite-toolbar label {
-  min-width: 220px;
+  flex: 1 1 220px;
+  min-width: 180px;
 }
 
 input[type="range"] {
@@ -484,56 +503,193 @@ input[type="range"] {
   opacity: 1;
 }
 
-@media (max-width: 980px) {
-  .shell,
+@media (max-width: 1180px) {
+  .shell {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  h2 {
+    font-size: 34px;
+  }
+
   .input-grid,
   .result-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .score-panel {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .score-copy {
+    text-align: left;
+  }
+}
+
+@media (max-width: 900px) {
+  .shell,
+  .input-grid {
     grid-template-columns: 1fr;
   }
 
   .sidebar {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
   }
 
   .brand,
   .history {
     grid-column: 1 / -1;
   }
+
+  .brand {
+    padding: 8px 2px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
 }
 
 @media (max-width: 640px) {
   .shell {
+    gap: 12px;
     padding: 10px;
   }
 
   .sidebar {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .topbar {
     align-items: stretch;
     flex-direction: column;
+    gap: 14px;
+    min-height: auto;
+    padding: 2px 0 4px;
   }
 
   .actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
   h2 {
     font-size: 28px;
+    line-height: 1.16;
+  }
+
+  .panel,
+  .editor-card,
+  .score-panel,
+  .tabs {
+    box-shadow: 0 10px 24px rgba(31, 37, 40, .07);
+  }
+
+  .brand {
+    gap: 10px;
+  }
+
+  .mark {
+    flex-basis: 42px;
+    width: 42px;
+    height: 42px;
+  }
+
+  textarea {
+    min-height: 190px;
+    max-height: 52vh;
+  }
+
+  .score-panel {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .score-ring {
+    width: 142px;
+    height: 142px;
+  }
+
+  .score-copy {
+    text-align: center;
   }
 
   .insight {
     grid-template-columns: 1fr;
+    gap: 9px;
   }
 
   .tab-list {
     overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tab-list::-webkit-scrollbar {
+    display: none;
   }
 
   .tab {
-    min-width: 92px;
+    min-width: 96px;
+  }
+
+  .rewrite-toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .rewrite-toolbar label,
+  .rewrite-toolbar button,
+  .actions button {
+    width: 100%;
+  }
+
+  .resume-preview {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .shell {
+    padding: 8px;
+  }
+
+  h1 {
+    font-size: 17px;
+  }
+
+  h2 {
+    font-size: 25px;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-title,
+  .card-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tab-panel {
+    padding: 10px;
+  }
+
+  .primary,
+  .ghost {
+    min-height: 44px;
   }
 }
